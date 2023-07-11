@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { Card } from 'antd';
 import { Photo } from "../../utils/AlbumManagerAPI/AlbumManagerAPI";
 import { PhotoTitle } from './components/PhotoTitle';
+import styles from "./PhotoItem.module.css"
 
 interface PhotoItem extends Photo {
   onClick: (id: string) => void,
@@ -17,7 +18,7 @@ const PhotoItem = memo(function ({id, thumbnailUrl, title, onClick, onEditClick,
   return (<Card
     hoverable
     style={{ width: 240, height: 360 }}
-    cover={<img alt="example" src={thumbnailUrl} loading="lazy" />}
+    cover={<img className={styles.photoImg} src={thumbnailUrl} loading="lazy" />}
     onClick={() => onClick(id)}
     >
     <Meta 

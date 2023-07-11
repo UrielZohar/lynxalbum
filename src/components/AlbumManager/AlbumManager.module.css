@@ -1,9 +1,23 @@
+.albumManagerWrapper {
+  position: relative;
+}
+
+.header {
+  position: sticky;
+  padding: 30px;
+  text-align: center;
+  top: 0;
+  z-index: 500;
+  background-color: white;
+}
+
 .grid {
   display: grid;
   grid-template-columns: auto auto auto;
   padding: 10px;
   gap: 30px;
 }
+
 
 @media screen and (max-width: 800px) {
   .grid {

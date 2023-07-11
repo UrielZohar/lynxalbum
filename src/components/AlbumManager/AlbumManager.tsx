@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from "react"
-import { Card } from 'antd';
+import { Card, Button } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { useAppSelector, useAppDispatch } from "../../app/hooks"
 import {
   getPhotosAsync, selectPhotos, setPhotoModal, selectPhotoModal, deletePhoto, selectStatus, setPhotoToEdit, selectPhotoToEdit, updatePhoto
@@ -18,7 +19,6 @@ export function AlbumManager() {
   const isLoading: boolean = useAppSelector(selectStatus) === 'loading';
   const photoModal: Photo | null = useAppSelector(selectPhotoModal);
   const photoToEdit: Photo | null = useAppSelector(selectPhotoToEdit);
-  console.log('photoToEdit', photoToEdit);
   const dispatch = useAppDispatch()
   
   useEffect(() => {
@@ -57,6 +57,9 @@ export function AlbumManager() {
         handleUpdate={(photo: Photo) => dispatch(updatePhoto(photo))}
         {...photoToEdit}
       />
+      <div className={styles.header}>
+        <Button type="primary" icon={<PlusCircleOutlined />}>Add Photo</Button>
+      </div>
       <div className={styles.grid}>
         {
           photos.map((photo: Photo) => 
