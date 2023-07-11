@@ -1,0 +1,32 @@
+
+.photoModal {
+  width: 750px !important;
+  :global(.ant-modal-content) {
+    height: 800px !important;
+  }
+}
+
+
+.photoCard {
+  margin: 0 auto;
+  width: 650px;
+  height: 650px;
+}
+
+@media screen and (max-width: 800px) {
+  .photoModal {
+    width: 600px !important;
+    :global(.ant-modal-content) {
+      height: 500px !important;
+    }
+  }
+  .photoCard {
+    width: 500px;
+    height: 300px;
+  }
+
+  .photoModalImg {
+    width: 300px;
+    height: 300px;
+  }
+}

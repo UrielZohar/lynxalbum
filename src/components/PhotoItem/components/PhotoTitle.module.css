@@ -1,0 +1,8 @@
+.photoActionIcon {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.photoActionIcon:hover {
+  background-color: yellow; 
+}
