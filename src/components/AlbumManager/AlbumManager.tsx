@@ -44,7 +44,7 @@ export function AlbumManager() {
   }, [])
 
   return (
-    <div>
+    <div className={styles.albumManagerWrapper}>
       <LoadingSpinner visible={isLoading}/>
       <PhotoModal 
         isVisible={!!photoModal} 
