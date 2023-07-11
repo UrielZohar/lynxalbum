@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Card } from 'antd';
 import { Photo } from "../../utils/AlbumManagerAPI/AlbumManagerAPI";
 import { PhotoTitle } from './components/PhotoTitle';
@@ -12,7 +13,7 @@ interface PhotoItem extends Photo {
 
 const { Meta } = Card;
 
-export function PhotoItem({id, thumbnailUrl, title, onClick, onEditClick, onDeleteClick}: PhotoItem) {
+const PhotoItem = memo(function ({id, thumbnailUrl, title, onClick, onEditClick, onDeleteClick}: PhotoItem) {
   return (<Card
     hoverable
     style={{ width: 240, height: 360 }}
@@ -24,4 +25,6 @@ export function PhotoItem({id, thumbnailUrl, title, onClick, onEditClick, onDele
       description={title} 
     />
   </Card>)
-}
+})
+
+export {PhotoItem};
