@@ -47,6 +47,15 @@ export const updatePhoto = createAsyncThunk(
   },
 )
 
+export const addPhoto = createAsyncThunk(
+  "albums/addPhoto",
+  async (photo: Photo) => {
+    await AlbumManagerAPI.addPhoto(photo);
+    // The value we return becomes the `fulfilled` action payload
+    return photo;
+  },
+)
+
 export const AlbumManagerSlice = createSlice({
   name: "albums",
   initialState,
@@ -85,6 +94,9 @@ export const AlbumManagerSlice = createSlice({
         state.status = "idle"
         state.photos = state.photos.filter(photo => photo.id != action.payload)
       })
+      .addCase(deletePhoto.rejected, (state) => {
+        state.status = "failed"
+      })
       .addCase(updatePhoto.rejected, (state) => {
         state.status = "failed"
       })
@@ -94,15 +106,22 @@ export const AlbumManagerSlice = createSlice({
       .addCase(updatePhoto.fulfilled, (state, action) => {
         state.status = "idle"
         state.photos = state.photos.map(photo => {
-          if (photo.id === action.payload.id) {
+          if (photo.id == action.payload.id) {
             return action.payload;
           } 
           return photo;
         })
         state.photoToEdit = null;
       })
-      .addCase(deletePhoto.rejected, (state) => {
+      .addCase(addPhoto.rejected, (state) => {
         state.status = "failed"
+      })
+      .addCase(addPhoto.pending, (state) => {
+        state.status = "loading"
+      })
+      .addCase(addPhoto.fulfilled, (state, action) => {
+        state.status = "idle"
+        state.photos = [action.payload, ...state.photos]
       })
   },
 })

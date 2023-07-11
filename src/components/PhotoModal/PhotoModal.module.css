@@ -13,6 +13,11 @@
   height: 650px;
 }
 
+.photoModalImg {
+  width: 600px;
+  height: 600px;
+}
+
 @media screen and (max-width: 800px) {
   .photoModal {
     width: 600px !important;

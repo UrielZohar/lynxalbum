@@ -1,3 +1,24 @@
+# The Project Includes
+✅ Using TypeScript
+
+✅ Performance improvement (using "memo", "lazy" attribute for img tag and etc...)
+
+✅ Redux Toolkit
+
+✅ Antd styling and components
+
+✅ Supporting CRUD for photos
+
+✅ Spinner for async actions 
+
+✅ Deployment to AWS S3 (https://lynxalbum.s3.eu-west-1.amazonaws.com/index.html)
+
+
+
+
+
+
+
 # vite-template-redux
 
 Uses [Vite](https://vitejs.dev/), [Vitest](https://vitest.dev/), and [React Testing Library](https://github.com/testing-library/react-testing-library) to create a modern [React](https://react.dev/) app compatible with [Create React App](https://create-react-app.dev/)

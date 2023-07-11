@@ -1,9 +1,9 @@
-import { useEffect, useCallback } from "react"
+import { useEffect, useCallback, useState } from "react"
 import { Card, Button } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { useAppSelector, useAppDispatch } from "../../app/hooks"
 import {
-  getPhotosAsync, selectPhotos, setPhotoModal, selectPhotoModal, deletePhoto, selectStatus, setPhotoToEdit, selectPhotoToEdit, updatePhoto
+  getPhotosAsync, selectPhotos, setPhotoModal, selectPhotoModal, deletePhoto, addPhoto, selectStatus, setPhotoToEdit, selectPhotoToEdit, updatePhoto
 } from "./AlbumManagerSlice"
 import styles from "./AlbumManager.module.css"
 import { Photo } from "../../utils/AlbumManagerAPI/AlbumManagerAPI";
@@ -11,6 +11,7 @@ import { PhotoItem } from "../PhotoItem/PhotoItem";
 import PhotoModal from "../PhotoModal/PhotoModal";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 import { PhotoEditModal } from "../PhotoEditModal/PhotoEditModal";
+import { PhotoAddModal } from "../PhotoAddModal/PhotoAddModal";
 
 const { Meta } = Card;
 
@@ -19,6 +20,7 @@ export function AlbumManager() {
   const isLoading: boolean = useAppSelector(selectStatus) === 'loading';
   const photoModal: Photo | null = useAppSelector(selectPhotoModal);
   const photoToEdit: Photo | null = useAppSelector(selectPhotoToEdit);
+  const [addPhotoVisible, setAddPhotoVisible] = useState(false);
   const dispatch = useAppDispatch()
   
   useEffect(() => {
@@ -42,6 +44,12 @@ export function AlbumManager() {
     if (!isOk) return;
     dispatch(deletePhoto(id));
   }, [])
+  
+  const handleAddPhoto = (photo: Photo) => {
+    photo.id = `${photos.length + 1}`;
+    dispatch(addPhoto(photo));
+    setAddPhotoVisible(false);
+  }
 
   return (
     <div className={styles.albumManagerWrapper}>
@@ -51,6 +59,11 @@ export function AlbumManager() {
         handleCancel={handleOnPhotoModalClose}
         {...photoModal} 
       />
+      <PhotoAddModal 
+        isVisible={addPhotoVisible} 
+        handleAdd={handleAddPhoto}
+        handleCancel={() => setAddPhotoVisible(false)}
+      />
       <PhotoEditModal 
         isVisible={!!photoToEdit}
         handleCancel={() => dispatch(setPhotoToEdit(null))}
@@ -58,7 +71,7 @@ export function AlbumManager() {
         {...photoToEdit}
       />
       <div className={styles.header}>
-        <Button type="primary" icon={<PlusCircleOutlined />}>Add Photo</Button>
+        <Button type="primary" icon={<PlusCircleOutlined />} onClick={() => setAddPhotoVisible(true)}>Add Photo</Button>
       </div>
       <div className={styles.grid}>
         {

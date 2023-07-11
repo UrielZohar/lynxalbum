@@ -1,21 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Modal, Button, Form, Input } from 'antd';
 
-export function PhotoEditModal({isVisible, handleCancel, id, title, handleUpdate, ...rest} : any) {
+export function PhotoAddModal({isVisible, handleAdd, handleCancel} : any) {
   const [form] = Form.useForm();
   const [visible, setVisible] = useState(isVisible);
-
-  useEffect(() => {
-    form.setFieldsValue({title});
-  }, [id, title]);
 
   useEffect(() => {
     setVisible(isVisible);
   }, [isVisible])
 
-
-  const onFinish = ({title}: any) => {
-    handleUpdate({...rest, title, id});
+  const onFinish = (photo: any) => {
+    handleAdd({...photo});
     setVisible(false);
     form.resetFields();
   };
@@ -25,26 +20,30 @@ export function PhotoEditModal({isVisible, handleCancel, id, title, handleUpdate
   };
 
   const _handleCancel = () => {
+    handleCancel();
     setVisible(false);
     form.resetFields();
-    handleCancel();
   };
 
   return (
     <Modal
-      title={`Album ID ${id}`}
+      title='Add Photo'
       onCancel={_handleCancel}
       footer={[
-        <Button key="update" type='primary' onClick={form.submit}>Update</Button>,
+        <Button key="add" type='primary' onClick={form.submit}>Add</Button>,
       ]}
       open={visible}
     >
       <Form
-        name="editPhoto"
-        labelCol={{ span: 2 }}
+        name="addPhoto"
+        labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 600 }}
-        initialValues={{ title }}
+        initialValues={{ 
+          title: 'A new photo', 
+          url: 'https://via.placeholder.com/600/92c952', 
+          thumbnailUrl: 'https://via.placeholder.com/150/92c952' 
+        }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
@@ -54,6 +53,20 @@ export function PhotoEditModal({isVisible, handleCancel, id, title, handleUpdate
             label="Title"
             name="title"
             rules={[{ required: true, message: 'Please input your title' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="url"
+            name="url"
+            rules={[{ required: true, message: 'Please input your url' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="ThumbnailUrl"
+            name="thumbnailUrl"
+            rules={[{ required: true, message: 'Please input your thumbnailUrl' }]}
           >
             <Input />
           </Form.Item>
